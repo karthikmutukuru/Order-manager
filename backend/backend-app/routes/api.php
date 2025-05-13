@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+
 
 Route::middleware('api')->group(function () {
     // Health check
@@ -17,6 +19,9 @@ Route::middleware('api')->group(function () {
     // Test CORS
     Route::get('/test-cors', function () { /* ... */ });
 
+    Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+
+
     // Orders API
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
@@ -24,7 +29,7 @@ Route::middleware('api')->group(function () {
         Route::post('/', [OrderController::class, 'store']);
         Route::put('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
-        Route::get('/summary', [OrderController::class, 'summary']);
+        Route::get('/{id}/summary', [OrderController::class, 'summary']);
     });
 
     // Protected routes (Sanctum)

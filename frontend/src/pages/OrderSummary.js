@@ -8,7 +8,7 @@ const OrderSummary = () => {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    API.get(`/orders/${id}`)
+    API.get(`/orders/${id}/summary`)
       .then(res => setOrder(res.data))
       .catch(err => console.error('Error loading order summary:', err));
   }, [id]);

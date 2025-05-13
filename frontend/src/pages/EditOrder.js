@@ -26,9 +26,14 @@ const EditOrder = () => {
     API.put(`/orders/${id}`, order)
       .then(() => navigate('/'))
       .catch(err => {
-        console.error('Update failed:', err);
-        alert('Update failed.');
-      });
+        if (err.response?.status === 404) {
+          alert('Order not found.');
+          navigate('/');
+        } else {
+          console.error('Update failed:', err);
+          alert('Update failed.');
+        }
+      });      
   };
 
   return (

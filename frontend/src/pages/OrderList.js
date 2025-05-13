@@ -12,6 +12,7 @@ const OrderList = () => {
       setOrders(response.data);
     } catch (err) {
       console.error('Error loading orders:', err);
+      alert('Could not fetch orders.');
     }
   };
 

@@ -48,18 +48,15 @@ class OrderController extends Controller
         return response()->json(null, 204);
     }
 
-    //summary method
-    public function summary()
+    // summary method
+    public function summary($id)
     {
-        $totalOrders = Order::count();
-        $products = Order::select('product')
-            ->groupBy('product')
-            ->selectRaw('count(*) as count, product')
-            ->get();
+        $order = Order::findOrFail($id);
 
         return response()->json([
-            'total_orders' => $totalOrders,
-            'product_summary' => $products
+            'customer_name' => $order->customer_name,
+            'product' => $order->product,
+            'created_at' => $order->created_at->toDateTimeString(),
         ]);
     }
 }

@@ -16,8 +16,12 @@ const CreateOrder = () => {
       });
       navigate('/');
     } catch (err) {
-      console.error('Error creating order:', err.response?.data || err.message);
-      alert('Failed to create order.');
+      if (err.response?.status === 422) {
+        alert('Validation failed. Please check your input.');
+      } else {
+        console.error('Error creating order:', err);
+        alert('Failed to create order.');
+      }
     }
   };
 
